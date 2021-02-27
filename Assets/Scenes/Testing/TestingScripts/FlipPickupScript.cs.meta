@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 97460268c47033d4e9f940415903f297
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - UnderCar: {instanceID: 0}
+  - FlipIcon: {instanceID: 0}
+  - Marker: {instanceID: 0}
+  - TopSpeedBoost: {instanceID: 0}
+  - TopShortRangeTP: {instanceID: 0}
+  - UnderSpeedBoost: {instanceID: 0}
+  - UnderShortRangeTP: {instanceID: 0}
+  - TopCarBody: {instanceID: 0}
+  - TopCarWheels: {instanceID: 0}
+  - TopLights: {instanceID: 0}
+  - sm: {instanceID: 0}
+  - lfs: {instanceID: 0}
+  - ExitDisabler: {instanceID: 0}
+  - ExitDisablerLoc: {instanceID: 0}
+  - ForwardReEnabler: {instanceID: 0}
+  - Tmanager: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
