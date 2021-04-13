@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class sideManager : MonoBehaviour {
+public class sideManager : MonoBehaviour
+{
 
     public string side;
     //true = top
@@ -11,21 +10,14 @@ public class sideManager : MonoBehaviour {
 
     private void Start()
     {
-        tb = true;
-
         side = "top";
     }
 
     private void Update()
     {
         if (side == "top")
-        {
             tb = true;
-        }
         else if (side == "bottom")
-        {
             tb = false;
-        }
     }
-
 }

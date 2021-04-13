@@ -22,7 +22,6 @@ public class LaneFallScript : MonoBehaviour
     public void Start()
     {
         //sm = GetComponent<sideManager>();
-
     }
 
     public void Update()
@@ -64,7 +63,9 @@ public class LaneFallScript : MonoBehaviour
                         {
                             i.enabled = false;
                             disCount += 1;
+#if UNITY_EDITOR
                             Debug.Log("Disabled the collider of " + disCount + " pieces.");
+#endif
                             i.GetComponent<Renderer>().enabled = false;
                         }
                     }

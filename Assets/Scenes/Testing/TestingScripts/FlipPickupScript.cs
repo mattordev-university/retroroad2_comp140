@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FlipPickupScript : MonoBehaviour
 {
-
+/* 
     public GameObject UnderCar;
 
     public GameObject FlipIcon;
@@ -210,8 +210,8 @@ public class FlipPickupScript : MonoBehaviour
             }
             FlipIcon.SetActive(false);
             Debug.Log("Icon Off");
-        }
-    }
+        } 
+    }*/
     //IEnumerator LoseTime()
     //{
         

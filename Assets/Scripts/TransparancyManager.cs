@@ -7,7 +7,7 @@ public class TransparancyManager : MonoBehaviour {
 
     public float trans = 0.3f;
 
-    public bool shouldChangeTrans;
+    public bool shouldChangeTransparency;
 
     public bool hasTriggered = false;
 
@@ -15,14 +15,14 @@ public class TransparancyManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        shouldChangeTrans = false;
+        shouldChangeTransparency = false;
 
         sm = GameObject.FindGameObjectWithTag("Player").GetComponent<sideManager>();
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (shouldChangeTrans == true)
+        if (shouldChangeTransparency == true)
         {
             Debug.Log("in trigger, changing trans");
             if (other.tag == "lane1Piece")
