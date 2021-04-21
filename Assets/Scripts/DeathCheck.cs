@@ -5,15 +5,10 @@ public class DeathCheck : MonoBehaviour
 {
 
     private GameObject Car;
-
     private sideManager sm;
-
     public GameObject Player;
-
     public string sceneName;
-
     public int buildIndex;
-
     public Scene currentScene;
 
     // Use this for initialization
@@ -21,33 +16,16 @@ public class DeathCheck : MonoBehaviour
     {
         // Create a temporary reference to the current scene.
         currentScene = SceneManager.GetActiveScene();
-        //if (sceneName == "1st map")
-        //{
-        //    // Do something...
-        //}
-        //else if (sceneName == "Circle test")
-        //{
-        //    // Do something...
-        //}
-
-        Car = GameObject.FindGameObjectWithTag("Player");
-        sm = GameObject.FindGameObjectWithTag("Player").GetComponent<sideManager>();
-        //Player = GameObject.FindGameObjectWithTag("Player").GetComponent<GameObject>();
+        
+        Car = GameObject.FindGameObjectWithTag("Car");
+        sm = GameObject.FindGameObjectWithTag("Car").GetComponent<sideManager>();
     }
 
     void Update()
     {
-        if (Player == null)
+        if (sm == null)
         {
-            Player = GameObject.FindGameObjectWithTag("Player").GetComponent<GameObject>();
-        }
-
-        if (Player != null)
-        {
-            if (sm == null)
-            {
-                sm = GameObject.FindGameObjectWithTag("Player").GetComponent<sideManager>();
-            }
+            sm = GameObject.FindGameObjectWithTag("Car").GetComponent<sideManager>();
         }
 
         if (currentScene == null)

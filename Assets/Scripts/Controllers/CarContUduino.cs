@@ -12,8 +12,8 @@ public class CarContUduino : MonoBehaviour
     UduinoManager uduino;   
 
     // analog pins
-    int steeringPot = 0;
-    int throttlePot = 2;
+    //int steeringPot = 0;
+    //int throttlePot = 2;
     int brakePot = 3;
 
     // other pins
@@ -27,9 +27,9 @@ public class CarContUduino : MonoBehaviour
     public int brakePotValue;
 
     // ref: https://forum.unity.com/threads/mapping-or-scaling-values-to-a-new-range.180090/
-    public int steeringPot8Bit;
-    public int throttlePot8Bit;
-    public int brakePot8Bit;
+    public float steeringPotMapped;
+    public float throttlePotMapped;
+    public float brakePotMapped;
 
     #endregion
 
@@ -130,6 +130,10 @@ public class CarContUduino : MonoBehaviour
         UduinoManager.Instance.pinMode(buttonCPin, PinMode.Input_pullup);
         UduinoManager.Instance.pinMode(buttonDPin, PinMode.Input_pullup);
 
+        UduinoManager.Instance.pinMode(AnalogPin.A0, PinMode.Input); // Steering
+        UduinoManager.Instance.pinMode(AnalogPin.A1, PinMode.Input); // Throttle
+        UduinoManager.Instance.pinMode(AnalogPin.A2, PinMode.Input); // Brake
+
         flipTimerIsRunning = false;
     }
 
@@ -139,9 +143,9 @@ public class CarContUduino : MonoBehaviour
         ReadPots();
 
         CheckAbility(buttonAPin);
-        CheckAbility(buttonBPin);
-        CheckAbility(buttonCPin);
-        CheckAbility(buttonDPin);
+        //CheckAbility(buttonBPin);
+        //CheckAbility(buttonCPin);
+        //CheckAbility(buttonDPin);
 
         if (changeFOV)
         {
@@ -162,6 +166,8 @@ public class CarContUduino : MonoBehaviour
 
     void CheckAbility(int abilityNo)  
     {
+        StartCoroutine(Delay(4f));
+        // Check the state of the button
         if (CheckPinValue(abilityNo)) 
         {
             TriggerAbility(abilityNo);
@@ -170,7 +176,8 @@ public class CarContUduino : MonoBehaviour
 
     bool CheckPinValue(int pinNo) 
     {
-        return UduinoManager.Instance.digitalRead(pinNo, "LOW") == 1;
+        Debug.Log(UduinoManager.Instance.digitalRead(pinNo) == 0);
+        return UduinoManager.Instance.digitalRead(pinNo) == 0;
     }
 
     void TriggerAbility(int abilityNo) 
@@ -192,13 +199,14 @@ public class CarContUduino : MonoBehaviour
 
     void ReadPots()
     {
-        steeringPotValue = UduinoManager.Instance.analogRead(steeringPot);
-        throttlePotValue = UduinoManager.Instance.analogRead(throttlePot);
+        steeringPotValue = UduinoManager.Instance.analogRead(AnalogPin.A0);
+        throttlePotValue = UduinoManager.Instance.analogRead(AnalogPin.A1);
         brakePotValue = UduinoManager.Instance.analogRead(brakePot);
 
-        steeringPot8Bit = PotTo8Bit(steeringPotValue);
-        throttlePot8Bit = PotTo8Bit(throttlePotValue);
-        brakePot8Bit = PotTo8Bit(brakePotValue);
+        steeringPotMapped = MapIntToFloat(steeringPotValue, calMin, calMax, -1f, 1f);
+        //throttlePotMapped = MapIntToFloat(throttlePot, calMin, calMax, -1f, 1f);
+        //throttlePot8Bit = PotTo8Bit(throttlePotValue);
+        //brakePot8Bit = PotTo8Bit(brakePotValue);
     }
 
     int PotTo8Bit(int potValue)
@@ -214,6 +222,11 @@ public class CarContUduino : MonoBehaviour
         float i = ((((float)inputValue - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin );
         i = Mathf.Clamp(i,toMin,toMax);
         return i;
+    }
+
+    IEnumerator Delay(float amount)
+    {
+        yield return new WaitForSeconds(amount);
     }
 
 #endregion
@@ -399,11 +412,11 @@ public class CarContUduino : MonoBehaviour
         /* Call the MapIntToFloat function for each input to change the value of the analog pot pin (0 to 1023) to the 
         value range expected by the steering (-1 to 1) also taking into account the calibration properties*/
         
-        horizontalInput = MapIntToFloat(steeringPot, calMin, calMax, -1f, 1f);
+        horizontalInput = steeringPotMapped;
         //horizontalInput = Input.GetAxis(HORIZONTAL); OLD
         //horizontalInput = steeringPot8Bit; OLD
         
-        verticalInput = MapIntToFloat(throttlePot, calMin, calMax, -1f, 1f);
+        //verticalInput = throttlePotMapped;
         //verticalInput = Input.GetAxis(VERTICAL);
         //verticalInput = throttlePot8Bit;
         

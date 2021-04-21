@@ -17,7 +17,7 @@ public class TransparancyManager : MonoBehaviour {
     void Start () {
         shouldChangeTransparency = false;
 
-        sm = GameObject.FindGameObjectWithTag("Player").GetComponent<sideManager>();
+        sm = GameObject.FindGameObjectWithTag("Car").GetComponent<sideManager>();
     }
 
     private void OnTriggerStay(Collider other)

@@ -5,7 +5,7 @@ using Uduino;
 
 public class DigitalReadButton : MonoBehaviour {
 
-    public int button = 9;
+    public int button = 2;
     public GameObject buttonGameObject;
 
     int buttonValue = 0;
