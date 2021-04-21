@@ -22,6 +22,9 @@ public class CarContUduino : MonoBehaviour
     int buttonCPin = 4;
     int buttonDPin = 5;
 
+    int buttonValue = 0;
+    int prevButtonValue = 0;
+
     public int steeringPotValue;
     public int throttlePotValue;
     public int brakePotValue;
@@ -65,6 +68,8 @@ public class CarContUduino : MonoBehaviour
     [SerializeField] private Transform frontRightWheelTransform;
     [SerializeField] private Transform backLeftWheelTransform;
     [SerializeField] private Transform backRightWheelTransform;
+
+    private float smoothAmount = 10f;
 
 #endregion
 
@@ -166,7 +171,6 @@ public class CarContUduino : MonoBehaviour
 
     void CheckAbility(int abilityNo)  
     {
-        StartCoroutine(Delay(4f));
         // Check the state of the button
         if (CheckPinValue(abilityNo)) 
         {
@@ -461,7 +465,8 @@ public class CarContUduino : MonoBehaviour
         Quaternion rot;
         
         wheelCollider.GetWorldPose(out pos, out rot);
-        wheelTransform.rotation = rot * Quaternion.Euler(new Vector3(0, 90, 0));
+        Quaternion currentPos = rot * Quaternion.Euler(new Vector3(0, 90, 0));
+        wheelTransform.rotation = Quaternion.Lerp(wheelTransform.rotation, currentPos, smoothAmount * Time.deltaTime);
         wheelTransform.position = pos;
     }
 
