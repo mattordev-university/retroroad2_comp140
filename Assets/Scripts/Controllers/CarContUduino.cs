@@ -14,7 +14,7 @@ public class CarContUduino : MonoBehaviour
     // analog pins
     //int steeringPot = 0;
     //int throttlePot = 2;
-    int brakePot = 3;
+    //int brakePot = 3;
 
     // other pins
     int buttonAPin = 2;
@@ -43,11 +43,28 @@ public class CarContUduino : MonoBehaviour
 
     // Calibration min - the lowest value we expect to see from the sensor
     [Range(0,1023)]
-    public float calMin = 0f;
+    public float throttleCalMin = 0f;
 
     // Calibration max - the highest value we expect to see from the sensor
     [Range(0,1023)]
-    public float calMax = 1023f;
+    public float throttleCalMax = 1023f;
+
+    // Calibration min - the lowest value we expect to see from the sensor
+    [Range(0, 1023)]
+    public float steeringCalMin = 0f;
+
+    // Calibration max - the highest value we expect to see from the sensor
+    [Range(0, 1023)]
+    public float steeringCalMax = 1023f;
+
+    // Calibration min - the lowest value we expect to see from the sensor
+    [Range(0, 1023)]
+    public float brakeCalMin = 0f;
+
+    // Calibration max - the highest value we expect to see from the sensor
+    [Range(0, 1023)]
+    public float brakeCalMax = 1023f;
+
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
 
@@ -55,7 +72,7 @@ public class CarContUduino : MonoBehaviour
     private float verticalInput;
     private float currentSteerAngle;
     private float currentBreakForce;
-    private bool isBreaking;
+    [SerializeField] private bool isBreaking;
     [SerializeField] private float breakForce;
     [SerializeField] private float motorForce;
     [SerializeField] private float maxSteerAngle;
@@ -117,6 +134,12 @@ public class CarContUduino : MonoBehaviour
 
     private float maxTimeInFlip = 30f;
 
+    // checks
+    bool checkAb1;
+    bool checkAb2;
+    bool checkAb3;
+    bool checkAb4;
+
     //scripts
     public sideManager sideMan;
     public LaneFallScript laneFallScript;
@@ -146,12 +169,16 @@ public class CarContUduino : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // INPUT
+        GetKeyboardInput();
+        GetInput();
+
         ReadPots();
 
         CheckAbility(buttonAPin);
-        //CheckAbility(buttonBPin);
-        //CheckAbility(buttonCPin);
-        //CheckAbility(buttonDPin);
+        CheckAbility(buttonBPin);
+        CheckAbility(buttonCPin);
+        CheckAbility(buttonDPin);
 
         if (changeFOV)
         {
@@ -207,11 +234,11 @@ public class CarContUduino : MonoBehaviour
     {
         Debug.Log($"Ability triggered: {abilityNo}");
 
-        if (abilityNo == buttonAPin) {
+        if (abilityNo == buttonAPin && checkAb1) {
             ShortTeleport();
-        } else if (abilityNo == buttonBPin) {
+        } else if (abilityNo == buttonBPin && checkAb2) {
             SpeedBoost();
-        } else if (abilityNo == buttonCPin) {
+        } else if (abilityNo == buttonCPin && checkAb3) {
             Flip();
         } else if (abilityNo == buttonDPin) {
             TilePlacer();
@@ -222,16 +249,17 @@ public class CarContUduino : MonoBehaviour
 
     void ReadPots()
     {
+        steeringPotMapped = MapIntToFloat(steeringPotValue, steeringCalMin, steeringCalMax, -1f, 1f);
+        throttlePotMapped = MapIntToFloat(throttlePotValue, throttleCalMin, throttleCalMax, -1f, 1f);
+        //throttlePot8Bit = PotTo8Bit(throttlePotValue);
+        brakePotMapped = MapIntToFloat(brakePotValue, brakeCalMin, brakeCalMax, -1f, 1f);
+
         steeringPotValue = UduinoManager.Instance.analogRead(AnalogPin.A0);
         throttlePotValue = UduinoManager.Instance.analogRead(AnalogPin.A1);
-        brakePotValue = UduinoManager.Instance.analogRead(brakePot);
-
-        steeringPotMapped = MapIntToFloat(steeringPotValue, calMin, calMax, -1f, 1f);
-        //throttlePotMapped = MapIntToFloat(throttlePot, calMin, calMax, -1f, 1f);
-        //throttlePot8Bit = PotTo8Bit(throttlePotValue);
-        //brakePot8Bit = PotTo8Bit(brakePotValue);
+        brakePotValue = UduinoManager.Instance.analogRead(AnalogPin.A2);
     }
 
+    // Unused, will remove soon
     int PotTo8Bit(int potValue)
     {
         potValue = (int)Mathf.Lerp(0, 1023, Mathf.InverseLerp(0, 255, steeringPotValue));
@@ -245,11 +273,6 @@ public class CarContUduino : MonoBehaviour
         float i = ((((float)inputValue - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin );
         i = Mathf.Clamp(i,toMin,toMax);
         return i;
-    }
-
-    IEnumerator Delay(float amount)
-    {
-        yield return new WaitForSeconds(amount);
     }
 
 #endregion
@@ -266,12 +289,14 @@ public class CarContUduino : MonoBehaviour
             hasPickedUpTP = false;
             // disable model
             teleportUI.SetActive(false);
+            checkAb1 = false;
         }
     }
 
     private void SpeedBoost()
     {
         StartCoroutine(SpeedboostWait(speedBoostDuration));
+        checkAb2 = false;
     }
 
     private void Flip()
@@ -305,6 +330,8 @@ public class CarContUduino : MonoBehaviour
         }
 
         StartCoroutine(FlipSequence(maxTimeInFlip));
+
+        checkAb3 = false;
     }
 
     private void TilePlacer()
@@ -322,6 +349,7 @@ public class CarContUduino : MonoBehaviour
             Destroy(other.gameObject);
             hasPickedUpTP = true;
             teleportUI.SetActive(true);
+            checkAb1 = true;
         }
 #endregion
 
@@ -339,6 +367,7 @@ public class CarContUduino : MonoBehaviour
             changeFOV = true;
             Destroy(other.gameObject);
             speedboostUI.SetActive(true);
+            checkAb2 = true;
         }
 #endregion
 
@@ -351,6 +380,7 @@ public class CarContUduino : MonoBehaviour
             isFlippedCar = true;
             hasPickedUpFlip = true;
             flipPickupUI.SetActive(true);
+            checkAb3 = true;
         }
 #endregion
     }
@@ -365,6 +395,7 @@ public class CarContUduino : MonoBehaviour
             speedboostUI.SetActive(false);
         }
         mainCam.fieldOfView = fieldOfView;
+
     }
 
     IEnumerator FlipSequence(float time)
@@ -423,28 +454,76 @@ public class CarContUduino : MonoBehaviour
 
     private void FixedUpdate()
     {
-        GetInput();
+        // Input functions have been moved to the Update function
         HandleMoter();
         HandleSteering();
         UpdateWheels();
     }
 
+    
+    private void GetKeyboardInput() 
+   {
+        // Keyboard inputs
+        // Forward
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            verticalInput = -1f;
+        }
+        else if (Input.GetKeyUp(KeyCode.W))
+        {
+            verticalInput = 0f;
+        }
+
+        // Left
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            horizontalInput = -1f;
+        }
+        else if (Input.GetKeyUp(KeyCode.A))
+        {
+            horizontalInput = 0f;
+        }
+
+        // Back
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            verticalInput = 1f;
+        }
+        else if (Input.GetKeyUp(KeyCode.S))
+        {
+            verticalInput = 0f;
+        }
+
+        //Right
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            horizontalInput = 1f;
+        }
+        else if (Input.GetKeyUp(KeyCode.D))
+        {
+            horizontalInput = 0f;
+        }
+
+        isBreaking = Input.GetKey(KeyCode.Space);
+    }
+
     private void GetInput()
     {
+        
+        if (UduinoManager.Instance.isConnected())
+        {
+            /* Call the MapIntToFloat function for each input to change the value of the analog pot pin (0 to 1023) to the 
+            value range expected by the steering (-1 to 1) also taking into account the calibration properties*/
 
-        /* Call the MapIntToFloat function for each input to change the value of the analog pot pin (0 to 1023) to the 
-        value range expected by the steering (-1 to 1) also taking into account the calibration properties*/
-        
-        horizontalInput = steeringPotMapped;
-        //horizontalInput = Input.GetAxis(HORIZONTAL); OLD
-        //horizontalInput = steeringPot8Bit; OLD
-        
-        //verticalInput = throttlePotMapped;
-        //verticalInput = Input.GetAxis(VERTICAL);
-        //verticalInput = throttlePot8Bit;
-        
-        isBreaking = Input.GetKey(KeyCode.Space);
-        //isBreaking = brakePot8Bit;
+            horizontalInput = steeringPotMapped;
+
+            verticalInput = throttlePotMapped;
+
+            if (brakePotValue > 0)
+            {
+                currentBreakForce = brakePotMapped; 
+            }
+        }
     }
 
     private void HandleMoter()
