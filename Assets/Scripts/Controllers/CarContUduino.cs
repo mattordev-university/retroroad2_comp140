@@ -24,6 +24,7 @@ public class CarContUduino : MonoBehaviour
 
     int buttonValue = 0;
     int prevButtonValue = 0;
+    bool buttonState;
 
     public int steeringPotValue;
     public int throttlePotValue;
@@ -180,8 +181,26 @@ public class CarContUduino : MonoBehaviour
 
     bool CheckPinValue(int pinNo) 
     {
-        Debug.Log(UduinoManager.Instance.digitalRead(pinNo) == 0);
-        return UduinoManager.Instance.digitalRead(pinNo) == 0;
+        buttonValue = UduinoManager.Instance.digitalRead(pinNo);
+
+        // In this case, we compare the current button value to the previous button value, 
+        // to trigger the change only once the value change.
+        if (buttonValue != prevButtonValue)
+        {
+            if (buttonValue == 0)
+            {
+                buttonState = true;
+            }
+            else if (buttonValue == 1)
+            {
+                buttonState = false;
+            }
+        }
+        prevButtonValue = buttonValue; // Here we assign prev button value to the new value
+        
+
+        //Debug.Log(UduinoManager.Instance.digitalRead(pinNo) == 0);
+        return buttonState;
     }
 
     void TriggerAbility(int abilityNo) 
