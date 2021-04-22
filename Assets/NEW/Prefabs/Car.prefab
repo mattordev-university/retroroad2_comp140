@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3300652304382117986}
   - component: {fileID: 3300652304382117988}
-  - component: {fileID: 3300652304382117987}
   m_Layer: 0
   m_Name: CarTriggerColider
   m_TagString: Car
@@ -45,18 +44,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9424798, y: 0.68587583, z: 0.7913552}
   m_Center: {x: 0.020669734, y: -0.15706176, z: -0.10432213}
---- !u!114 &3300652304382117987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3300652304382117985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97460268c47033d4e9f940415903f297, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3300652304413948856
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +325,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -403,7 +391,7 @@ GameObject:
   - component: {fileID: 3300652305081417466}
   m_Layer: 0
   m_Name: Car
-  m_TagString: Untagged
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -422,7 +410,7 @@ Transform:
   - {fileID: 3300652305490209782}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50.000004, y: -30.000002, z: 0}
 --- !u!114 &3300652305081417466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,7 +546,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3300652305490209778}
   m_LocalRotation: {x: -0.21130967, y: 0.7848849, z: -0.36599785, w: 0.45315507}
-  m_LocalPosition: {x: 0, y: -1.928363, z: 2.2981334}
+  m_LocalPosition: {x: 4.2, y: 3.65, z: 6.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3300652305385250160}
@@ -619,12 +607,18 @@ MonoBehaviour:
   steeringPotValue: 0
   throttlePotValue: 0
   brakePotValue: 0
-  steeringPot8Bit: 0
-  throttlePot8Bit: 0
-  brakePot8Bit: 0
+  steeringPotMapped: 0
+  throttlePotMapped: 0
+  brakePotMapped: 0
+  throttleCalMin: 0
+  throttleCalMax: 1023
+  steeringCalMin: 0
+  steeringCalMax: 1023
+  brakeCalMin: 0
+  brakeCalMax: 1023
   breakForce: 1000
   motorForce: 3000
-  maxSteerAngle: 30
+  maxSteerAngle: 45
   frontLeftWheelCollider: {fileID: 3300652305269118648}
   frontRightWheelCollider: {fileID: 3300652306266166374}
   backLeftWheelCollider: {fileID: 3300652305547354735}
@@ -633,26 +627,26 @@ MonoBehaviour:
   frontRightWheelTransform: {fileID: 5825258502263964345}
   backLeftWheelTransform: {fileID: 5825258502263964343}
   backRightWheelTransform: {fileID: 5825258502263964341}
-  forwardMarker: {fileID: 0}
-  carPos: {fileID: 0}
+  forwardMarker: {fileID: 3300652304875124346}
+  carPos: {fileID: 3300652305490209778}
   teleportUI: {fileID: 0}
   speedboostUI: {fileID: 0}
   mainCam: {fileID: 0}
   hasPickedUpFlip: 0
-  isTopCar: 0
+  isTopCar: 1
   isFlippedCar: 0
   TopCarCanCollide: 0
   flipTimerIsRunning: 0
   flippedCar: {fileID: 0}
   flipPickupUI: {fileID: 0}
-  topCarObj: {fileID: 0}
-  exitDisabler: {fileID: 0}
-  exitDisablerOriginalLocation: {fileID: 0}
-  forwardReEnabler: {fileID: 0}
-  underMarker: {fileID: 0}
-  sideMan: {fileID: 0}
-  laneFallScript: {fileID: 0}
-  transparancyManager: {fileID: 0}
+  topCarObj: {fileID: 3300652305490209778}
+  exitDisabler: {fileID: 3300652306355429533}
+  exitDisablerOriginalLocation: {fileID: 3300652305836672480}
+  forwardReEnabler: {fileID: 3300652304861557179}
+  underMarker: {fileID: 3300652305712076784}
+  sideMan: {fileID: 3300652305081417466}
+  laneFallScript: {fileID: 3300652306355429521}
+  transparancyManager: {fileID: 3300652304942410857}
 --- !u!1 &3300652305547354733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,6 +1023,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1107,6 +1102,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1185,6 +1181,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1263,6 +1260,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1341,6 +1339,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1419,6 +1418,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1497,6 +1497,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
