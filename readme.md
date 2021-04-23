@@ -66,6 +66,17 @@ And lots of time...
 
 **(COMING SOON)**
 
+## Where to find more of me (Socials & Contact information)
+
+- [Twitter(GameDevelopment)](https://twitter.com/MattRobertsCGD)
+- [Twitter(Streaming)](https://twitter.com/thetruemystic_)
+- [Twitter(Music)](https://twitter.com/VolatileFlow)
+- [Twitch](https://www.twitch.tv/thetruemystic_)
+- [Youtube(GameDevelopment)](https://www.youtube.com/channel/UC5qno-2R9uWWRPd3WT6MsHw)
+- [Youtube(Gaming&Streams)](https://www.youtube.com/c/thetruemystic_)
+- [Youtube(Music)](https://www.youtube.com/channel/UCtZF-RvqitFMk3urvHYSV5w)
+- [Contact]() form
+
 ## Sources, Resources & References
 
 - Elegoo, lightly referenced their MEGA2560 documentation and tutorials at the start of the project, which can be found [here](https://www.manualslib.com/manual/1353374/Elegoo-Mega2560.html#manual)
@@ -76,5 +87,11 @@ And lots of time...
 
 - The bright minds of the lecturers and techs at the Games Academy. Without their help, the codebase would still have a few issues and my sanity would be much worse.
 
-## License (where applicable)
-[MIT](https://choosealicense.com/licenses/mit/)
+## Legal Guff (where applicable)
+
+Any work created by me, is owned by me. If otherwise it has been stated and properly credited.
+If you would like to use my work for promotions, research or further development please contact me via one of the social channels
+listed above.
+
+Thanks! 
+-Matt
