@@ -36,7 +36,7 @@ The same video and image are also available in the repository under their respec
 In order to create your own RR2 controller, you will need to be able to 3D print the parts, or source them somewhere else. 
 There are multiple websites available for this and [this](https://all3dp.com/1/best-online-3d-printing-service-3d-print-services/) would be a good place to start looking.
 
-All models can be found in the Repository and I will *try* to keep them up to date as I work on them.
+All models can be found in the repository and I will *try* to keep them up to date as I work on them.
 
 As a general guide to the print settings here's what I would recommend:
 
@@ -50,7 +50,9 @@ Anywhere between .1 and .4 is what I tested.
 
 If you know your printer though, this part shouldn't be a problem.
 
-After printing the models provided in the repo next comes wiring and hardware. Here's a list of materials, some things like wires are approximated:
+After printing the models provided in the repository, next comes wiring and hardware. 
+
+Here's a list of materials, some things like wires etc. are approximated:
 
 - 1x Arduino Uno
 
