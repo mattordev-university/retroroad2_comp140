@@ -9,7 +9,7 @@ public class CarContUduino : MonoBehaviour
 #region UDUINO_VARS
     [Header("Uduino Variables")]
     // not sure if this is needed, but will keep for now
-    UduinoManager uduino;   
+    //UduinoManager uduino;   
 
     // analog pins
     //int steeringPot = 0;
@@ -295,7 +295,16 @@ public class CarContUduino : MonoBehaviour
 
     private void SpeedBoost()
     {
+        motorForce += boostAmount;
+#if UNITY_EDITOR
+            Debug.Log($"currently boosting, motor force is: {motorForce}");
+#endif
+
+        time = Time.timeSinceLevelLoad;
+        time += speedBoostDuration;
+        changeFOV = true;
         StartCoroutine(SpeedboostWait(speedBoostDuration));
+
         checkAb2 = false;
     }
 
@@ -357,14 +366,7 @@ public class CarContUduino : MonoBehaviour
         if (other.tag == "speedBoost" && !currentlyBoosting)
         {
             currentlyBoosting = true;
-            motorForce += boostAmount;
-#if UNITY_EDITOR
-            Debug.Log($"currently boosting, motor force is: {motorForce}");
-#endif
-
-            time = Time.timeSinceLevelLoad;
-            time += speedBoostDuration;
-            changeFOV = true;
+            
             Destroy(other.gameObject);
             speedboostUI.SetActive(true);
             checkAb2 = true;
@@ -519,9 +521,14 @@ public class CarContUduino : MonoBehaviour
 
             verticalInput = throttlePotMapped;
 
-            if (brakePotValue > 0)
+            if (brakePotValue > 511.5)
             {
-                currentBreakForce = brakePotMapped; 
+                currentBreakForce = brakePotMapped;
+                isBreaking = true;
+            }else
+            {
+                currentBreakForce = 0;
+                isBreaking = false;
             }
         }
     }

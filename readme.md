@@ -11,17 +11,30 @@ and this is what I came up with. There are various improvements to the codebase,
 
 ## How to play
 
-To play the game, you don't *need* to have the custom controller, as keyboard and mouse support have been added. Although the controller is a bespoke item, modeled, printed and wired by me the section below will expand on how you can go about creating your own, and what you will need to do so. **You can download the build of RR2TPR [HERE](https://mattrobertscgd.itch.io/)**
+To play the game, you don't *need* to have the custom controller, as keyboard and mouse support have been added. 
+Although the controller is a bespoke item, modeled, printed and wired by me the section below will 
+expand on how you can go about creating your own, and what you will need to do so. 
+**You can download the build of RR2TPR [HERE](https://mattrobertscgd.itch.io/)**
+
+
+## What does it look like?
+
+You can veiw a demo video of the project [HERE](https://web.microsoftstream.com/video/919b078e-e843-4e73-be4a-2b724bd325e6)
+Images can be found [HERE](https://imgur.com/bAdT4xP) and [HERE](https://imgur.com/F9zPJX0)
+
+The same video and image are also available in the repository under their respective names.
 
 
 ## Creating your own controller
 
-In order to create your own RR2 controller, you will need to be able to 3D print the parts, or source them somewhere else. There are multiple websites available for this and [this](https://all3dp.com/1/best-online-3d-printing-service-3d-print-services/) would be a good place to start looking.
+In order to create your own RR2 controller, you will need to be able to 3D print the parts, or source them somewhere else. 
+There are multiple websites available for this and [this](https://all3dp.com/1/best-online-3d-printing-service-3d-print-services/) would be a good place to start looking.
 
 As a general guide to the print settings here's what I would recommend:
 - 20-30% infill for all parts
-- Supports enabled. **NOTE: The wheel was modeled to be hollow. I wasn't the author of it, and I found it on [Thingiverse](https://www.thingiverse.com/), please check the sources section for a direct link**
-- 0.2 Layer height. This is more down to personal preference but most of the parts are modeled with a friction fit level of tolerance and at higher layer height you may struggle even more than what I did. Anywhere between .1 and .4 is what I tested.
+- Supports enabled. **NOTE: The wheel was modeled to be hollow. I wasn't the author of it, \n and I found it on [Thingiverse](https://www.thingiverse.com/), please check the sources section for a direct link**
+- 0.2 Layer height. This is more down to personal preference but most of the parts are modeled with a 
+friction fit level of tolerance and at higher layer height you may struggle even more than what I did. Anywhere between .1 and .4 is what I tested.
 
 If you know your printer though, this part shouldn't be a problem.
 

@@ -11,15 +11,17 @@ public class AnimatioManager : MonoBehaviour
     public GameObject Cinematic2;
     public GameObject NewCinematic;
     public GameObject Manager;
+    public GameObject followCam;
 
     // Use this for initialization
     void Start()
     {
         MiniMap.SetActive(false);
         StartCoroutine(TheSequence());
-        car = GameObject.FindGameObjectWithTag("Player");
+        car = GameObject.FindGameObjectWithTag("Car");
         car.SetActive(false);
         Cinematic2.SetActive(false);
+        followCam.SetActive(false);
     }
 
     private void Update()
@@ -31,6 +33,7 @@ public class AnimatioManager : MonoBehaviour
             NewCinematic.SetActive(false);
             Manager.SetActive(false);
             SkipText.enabled = false;
+            followCam.SetActive(true);
             Debug.Log("skipping cutscene");
         }   
 
@@ -41,6 +44,7 @@ public class AnimatioManager : MonoBehaviour
             Manager.SetActive(false);
             car.SetActive(true);
             SkipText.enabled = false;
+            followCam.SetActive(true);
             Debug.Log("skipping cutscene");
         }
     }
@@ -55,6 +59,7 @@ public class AnimatioManager : MonoBehaviour
         car.SetActive(true);
         Cinematic2.SetActive(false);
         MiniMap.SetActive(true);
+        followCam.SetActive(true);
         SkipText.enabled = false;
         Debug.Log("Second Cut");
     }  
