@@ -14,7 +14,7 @@ and this is what I came up with. There are various improvements to the codebase,
 To play the game, you don't *need* to have the custom controller, as keyboard and mouse support have been added. 
 Although the controller is a bespoke item, modeled, printed and wired by me the section below will 
 expand on how you can go about creating your own, and what you will need to do so. 
-**You can download the build of RR2TPR [HERE](https://mattrobertscgd.itch.io/), but there is also all versions in the repository \n for convenience. This is temporary and I'll be moving them somwhere seperate later.**
+**You can download the build of RR2TPR [HERE](https://mattrobertscgd.itch.io/), but there is also all versions in the repository for convenience. This is temporary and I'll be moving them somwhere seperate later.**
 
 
 ## What does it look like?
@@ -32,7 +32,7 @@ There are multiple websites available for this and [this](https://all3dp.com/1/b
 
 As a general guide to the print settings here's what I would recommend:
 - 20-30% infill for all parts
-- Supports enabled. **NOTE: The wheel was modeled to be hollow. I wasn't the author of it, \n and I found it on [Thingiverse](https://www.thingiverse.com/), please check the sources section for a direct link**
+- Supports enabled. **NOTE: The wheel was modeled to be hollow. I wasn't the author of it, and I found it on [Thingiverse](https://www.thingiverse.com/), please check the sources section for a direct link**
 - 0.2 Layer height. This is more down to personal preference but most of the parts are modeled with a 
 friction fit level of tolerance and at higher layer height you may struggle even more than what I did. Anywhere between .1 and .4 is what I tested.
 
