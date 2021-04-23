@@ -75,7 +75,7 @@ And lots of time...
 - [Youtube(GameDevelopment)](https://www.youtube.com/channel/UC5qno-2R9uWWRPd3WT6MsHw)
 - [Youtube(Gaming&Streams)](https://www.youtube.com/c/thetruemystic_)
 - [Youtube(Music)](https://www.youtube.com/channel/UCtZF-RvqitFMk3urvHYSV5w)
-- [Contact]() form
+- [Contact](https://mrobertscgd.wordpress.com/) [form](https://mrobertscgd.wordpress.com/) here,  at the bottom of the page.
 
 ## Sources, Resources & References
 
