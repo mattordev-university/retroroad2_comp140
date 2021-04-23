@@ -5,13 +5,18 @@
 ## What is it?
 
 RR2TPR is a unity game remade to work with a custom-built physical controller. I originally made this game in college (see sources for original release)
-with a team of 4 others - When I found out that I would be creating a physical
+with a team of 4 others
+
+When I found out that I would be creating a physical
 controller in University for my COMP140 module I decided to make a sequel of sorts
-and this is what I came up with. There are various improvements to the codebase, engine work, and performance throughout the entire project.``
+and this is what I came up with. 
+
+There are various improvements to the codebase, engine work, and performance throughout the entire project.
 
 ## How to play
 
 To play the game, you don't *need* to have the custom controller, as keyboard and mouse support have been added. 
+
 Although the controller is a bespoke item, modeled, printed and wired by me the section below will 
 expand on how you can go about creating your own, and what you will need to do so. 
 **You can download the build of RR2TPR [HERE](https://mattrobertscgd.itch.io/), but there is also all versions in the repository for convenience. This is temporary and I'll be moving them somwhere seperate later.**
@@ -20,6 +25,7 @@ expand on how you can go about creating your own, and what you will need to do s
 ## What does it look like?
 
 You can veiw a demo video of the project [HERE](https://web.microsoftstream.com/video/919b078e-e843-4e73-be4a-2b724bd325e6)
+
 Images can be found [HERE](https://imgur.com/bAdT4xP) and [HERE](https://imgur.com/F9zPJX0)
 
 The same video and image are also available in the repository under their respective names.
@@ -31,8 +37,11 @@ In order to create your own RR2 controller, you will need to be able to 3D print
 There are multiple websites available for this and [this](https://all3dp.com/1/best-online-3d-printing-service-3d-print-services/) would be a good place to start looking.
 
 As a general guide to the print settings here's what I would recommend:
+
 - 20-30% infill for all parts
+
 - Supports enabled. **NOTE: The wheel was modeled to be hollow. I wasn't the author of it, and I found it on [Thingiverse](https://www.thingiverse.com/), please check the sources section for a direct link**
+
 - 0.2 Layer height. This is more down to personal preference but most of the parts are modeled with a 
 friction fit level of tolerance and at higher layer height you may struggle even more than what I did. Anywhere between .1 and .4 is what I tested.
 
@@ -40,27 +49,26 @@ If you know your printer though, this part shouldn't be a problem.
 
 After printing the models provided in the repo next comes wiring and hardware. Here's a list of materials, some things like wires are approximated:
 
-1x Arduino Uno
+- 1x Arduino Uno
 
-3x 10k Potentiometers
+- 3x 10k Potentiometers
 
-4x Momentary buttons
+- 4x Momentary buttons
 
-1x Solderless breadboard
+- 1x Solderless breadboard
 
-4x Springs
+- 4x Springs
 
-Some 2-part epoxy
+- Some 2-part epoxy
 
-Some Hot glue
+- Some Hot glue
 
-A bundle of wires, I used ones designed for 
-
+- A bundle of wires, I used ones designed for 
 breadboard use.
 
-Some suction cups
+- Some suction cups
 
-And lots of time...
+- And lots of time...
 
 ## How to assemble:
 
@@ -89,9 +97,13 @@ And lots of time...
 
 ## Legal Guff (where applicable)
 
-Any work created by me, is owned by me. If otherwise it has been stated and properly credited.
+Any work created by me, is owned by me. 
+
+If otherwise it has been stated and properly credited.
+
 If you would like to use my work for promotions, research or further development please contact me via one of the social channels
 listed above.
 
 Thanks! 
--Matt
+
+**-Matt**
