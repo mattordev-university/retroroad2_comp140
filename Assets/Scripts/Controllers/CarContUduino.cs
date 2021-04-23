@@ -6,7 +6,7 @@ using System;
 
 public class CarContUduino : MonoBehaviour
 {
-#region UDUINO_VARS
+    #region UDUINO_VARS
     [Header("Uduino Variables")]
     // not sure if this is needed, but will keep for now
     //UduinoManager uduino;   
@@ -37,16 +37,16 @@ public class CarContUduino : MonoBehaviour
 
     #endregion
 
-#region CAR_VARS
- 
+    #region CAR_VARS
+
     [Header("Car Variables")]
 
     // Calibration min - the lowest value we expect to see from the sensor
-    [Range(0,1023)]
+    [Range(0, 1023)]
     public float throttleCalMin = 0f;
 
     // Calibration max - the highest value we expect to see from the sensor
-    [Range(0,1023)]
+    [Range(0, 1023)]
     public float throttleCalMax = 1023f;
 
     // Calibration min - the lowest value we expect to see from the sensor
@@ -71,7 +71,7 @@ public class CarContUduino : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
     private float currentSteerAngle;
-    private float currentBreakForce;
+    private float currentBrakeForce;
     [SerializeField] private bool isBreaking;
     [SerializeField] private float breakForce;
     [SerializeField] private float motorForce;
@@ -90,8 +90,11 @@ public class CarContUduino : MonoBehaviour
     private float smoothAmount = 10f;
     Rigidbody rb;
     [SerializeField] private float speed;
+    [SerializeField] private float brakeDeadzoneMultiplier = 1.1f; // the same as adding an extra 10%
+    [SerializeField] private float currentBreakDeadzoneMultiplier;
     [SerializeField] private GameObject COM;
     [SerializeField] private bool useCOM;
+    private bool doBrakeDelay;
 
 #endregion
 
@@ -168,6 +171,7 @@ public class CarContUduino : MonoBehaviour
         UduinoManager.Instance.pinMode(AnalogPin.A2, PinMode.Input); // Brake
 
         flipTimerIsRunning = false;
+        currentBreakDeadzoneMultiplier = brakeDeadzoneMultiplier;
 
         if (useCOM)
         { 
@@ -260,17 +264,14 @@ public class CarContUduino : MonoBehaviour
 
     void ReadPots()
     {
-
+        /* Call the MapIntToFloat function for each input to change the value of the analog pot pin (0 to 1023) to the 
+        value range expected by the steering (-1 to 1) also taking into account the calibration properties*/
         
         steeringPotMapped = MapIntToFloat(steeringPotValue, steeringCalMin, steeringCalMax, -1f, 1f);
         throttlePotMapped = MapIntToFloat(throttlePotValue, throttleCalMin, throttleCalMax, -1f, 1f);
-        //throttlePot8Bit = PotTo8Bit(throttlePotValue);
-        brakePotMapped = MapIntToFloat(brakePotValue, brakeCalMin, brakeCalMax, 0.25f, 10f * speed * 1.1f);
+        brakePotMapped = MapIntToFloat(brakePotValue, brakeCalMin, brakeCalMax, 0.25f, 10f * speed * currentBreakDeadzoneMultiplier);
 
-        if(speed <= 0) 
-        {
         
-        }
 
         // implement brake deadzone. When speed is below a certain value, and brake is high enough * it by 1000.
 
@@ -293,6 +294,12 @@ public class CarContUduino : MonoBehaviour
         float i = ((((float)inputValue - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin );
         i = Mathf.Clamp(i,toMin,toMax);
         return i;
+    }
+
+    IEnumerator BrakeDelay(int waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        doBrakeDelay = false;
     }
 
 #endregion
@@ -535,8 +542,7 @@ public class CarContUduino : MonoBehaviour
         
         if (UduinoManager.Instance.isConnected())
         {
-            /* Call the MapIntToFloat function for each input to change the value of the analog pot pin (0 to 1023) to the 
-            value range expected by the steering (-1 to 1) also taking into account the calibration properties*/
+            
 
             horizontalInput = steeringPotMapped;
 
@@ -544,11 +550,11 @@ public class CarContUduino : MonoBehaviour
 
             if (brakePotMapped > 0)
             {
-                currentBreakForce = brakePotMapped;
+                currentBrakeForce = brakePotMapped;
                 isBreaking = true;
             }else
             {
-                currentBreakForce = 0;
+                currentBrakeForce = 0;
                 isBreaking = false;
             }
         }
@@ -558,16 +564,31 @@ public class CarContUduino : MonoBehaviour
     {
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
-        currentBreakForce = isBreaking ? brakePotMapped : 0.25f;
+        
+        if (!doBrakeDelay)
+            currentBrakeForce = isBreaking ? brakePotMapped : 0.25f;
+
         ApplyBreaking();
     }
 
     private void ApplyBreaking()
     {
-        frontLeftWheelCollider.wheelDampingRate = currentBreakForce;
-        frontRightWheelCollider.wheelDampingRate = currentBreakForce;
-        backLeftWheelCollider.wheelDampingRate = currentBreakForce;
-        backRightWheelCollider.wheelDampingRate = currentBreakForce;
+        /*if (speed <= 5.5 && speed >= 0)
+        {
+            doBrakeDelay = true;
+            currentBrakeForce = Mathf.Infinity;
+            StartCoroutine(BrakeDelay(5));
+        }*/
+
+        if (speed <= 5.5)
+            currentBreakDeadzoneMultiplier *= Mathf.Infinity;
+        else
+            currentBreakDeadzoneMultiplier = brakeDeadzoneMultiplier;
+
+        frontLeftWheelCollider.wheelDampingRate = currentBrakeForce;
+        frontRightWheelCollider.wheelDampingRate = currentBrakeForce;
+        backLeftWheelCollider.wheelDampingRate = currentBrakeForce;
+        backRightWheelCollider.wheelDampingRate = currentBrakeForce;
         Debug.Log(frontLeftWheelCollider.wheelDampingRate);
     }
 
