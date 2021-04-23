@@ -46,6 +46,7 @@ As a general guide to the print settings here's what I would recommend:
 
 - 0.2 Layer height. This is more down to personal preference but most of the parts are modeled with a 
 friction fit level of tolerance and at higher layer height you may struggle even more than what I did. 
+
 Anywhere between .1 and .4 is what I tested.
 
 If you know your printer though, this part shouldn't be a problem.
