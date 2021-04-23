@@ -36,6 +36,8 @@ The same video and image are also available in the repository under their respec
 In order to create your own RR2 controller, you will need to be able to 3D print the parts, or source them somewhere else. 
 There are multiple websites available for this and [this](https://all3dp.com/1/best-online-3d-printing-service-3d-print-services/) would be a good place to start looking.
 
+All models can be found in the Repository and I will *try* to keep them up to date as I work on them.
+
 As a general guide to the print settings here's what I would recommend:
 
 - 20-30% infill for all parts
@@ -43,7 +45,8 @@ As a general guide to the print settings here's what I would recommend:
 - Supports enabled. **NOTE: The wheel was modeled to be hollow. I wasn't the author of it, and I found it on [Thingiverse](https://www.thingiverse.com/), please check the sources section for a direct link**
 
 - 0.2 Layer height. This is more down to personal preference but most of the parts are modeled with a 
-friction fit level of tolerance and at higher layer height you may struggle even more than what I did. Anywhere between .1 and .4 is what I tested.
+friction fit level of tolerance and at higher layer height you may struggle even more than what I did. 
+Anywhere between .1 and .4 is what I tested.
 
 If you know your printer though, this part shouldn't be a problem.
 
@@ -69,6 +72,8 @@ breadboard use.
 - Some suction cups
 
 - And lots of time...
+
+For programming your arduino, reffer to my sketch in the repository. It is essentially a clone of the built in Uduino sketch! Most of the programming was in engine.
 
 ## How to assemble:
 
