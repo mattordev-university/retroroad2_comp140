@@ -88,6 +88,10 @@ public class CarContUduino : MonoBehaviour
     [SerializeField] private Transform backRightWheelTransform;
 
     private float smoothAmount = 10f;
+    Rigidbody rb;
+    [SerializeField] private float speed;
+    [SerializeField] private GameObject COM;
+    [SerializeField] private bool useCOM;
 
 #endregion
 
@@ -164,11 +168,18 @@ public class CarContUduino : MonoBehaviour
         UduinoManager.Instance.pinMode(AnalogPin.A2, PinMode.Input); // Brake
 
         flipTimerIsRunning = false;
+
+        if (useCOM)
+        { 
+            rb.centerOfMass = COM.transform.position;                                                                                                                                                 
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        speed = rb.velocity.magnitude;
+
         // INPUT
         GetKeyboardInput();
         GetInput();
@@ -249,10 +260,19 @@ public class CarContUduino : MonoBehaviour
 
     void ReadPots()
     {
+
+        
         steeringPotMapped = MapIntToFloat(steeringPotValue, steeringCalMin, steeringCalMax, -1f, 1f);
         throttlePotMapped = MapIntToFloat(throttlePotValue, throttleCalMin, throttleCalMax, -1f, 1f);
         //throttlePot8Bit = PotTo8Bit(throttlePotValue);
-        brakePotMapped = MapIntToFloat(brakePotValue, brakeCalMin, brakeCalMax, -1f, 1f);
+        brakePotMapped = MapIntToFloat(brakePotValue, brakeCalMin, brakeCalMax, 0.25f, 10f * speed * 1.1f);
+
+        if(speed <= 0) 
+        {
+        
+        }
+
+        // implement brake deadzone. When speed is below a certain value, and brake is high enough * it by 1000.
 
         steeringPotValue = UduinoManager.Instance.analogRead(AnalogPin.A0);
         throttlePotValue = UduinoManager.Instance.analogRead(AnalogPin.A1);
@@ -446,6 +466,7 @@ public class CarContUduino : MonoBehaviour
         transparancyManager = GameObject.FindGameObjectWithTag("TMan").GetComponent<TransparancyManager>();
         flippedCar = GameObject.FindGameObjectWithTag("UnderCar");
         sideMan = GameObject.FindGameObjectWithTag("Car").GetComponent<sideManager>();
+        rb = GetComponent<Rigidbody>();
         carPos = gameObject;
         mainCam = Camera.main;
     }
@@ -521,7 +542,7 @@ public class CarContUduino : MonoBehaviour
 
             verticalInput = throttlePotMapped;
 
-            if (brakePotValue > 511.5)
+            if (brakePotMapped > 0)
             {
                 currentBreakForce = brakePotMapped;
                 isBreaking = true;
@@ -537,16 +558,17 @@ public class CarContUduino : MonoBehaviour
     {
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
-        currentBreakForce = isBreaking ? breakForce : 0f;
+        currentBreakForce = isBreaking ? brakePotMapped : 0.25f;
         ApplyBreaking();
     }
 
     private void ApplyBreaking()
     {
-        frontLeftWheelCollider.brakeTorque = currentBreakForce;
-        frontRightWheelCollider.brakeTorque = currentBreakForce;
-        backLeftWheelCollider.brakeTorque = currentBreakForce;
-        backRightWheelCollider.brakeTorque = currentBreakForce;
+        frontLeftWheelCollider.wheelDampingRate = currentBreakForce;
+        frontRightWheelCollider.wheelDampingRate = currentBreakForce;
+        backLeftWheelCollider.wheelDampingRate = currentBreakForce;
+        backRightWheelCollider.wheelDampingRate = currentBreakForce;
+        Debug.Log(frontLeftWheelCollider.wheelDampingRate);
     }
 
     private void HandleSteering()
