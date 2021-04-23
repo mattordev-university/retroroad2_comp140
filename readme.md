@@ -24,7 +24,7 @@ expand on how you can go about creating your own, and what you will need to do s
 
 ## What does it look like?
 
-You can veiw a demo video of the project [HERE](https://web.microsoftstream.com/video/919b078e-e843-4e73-be4a-2b724bd325e6)
+You can veiw a demo video of the project [HERE](https://web.microsoftstream.com/video/919b078e-e843-4e73-be4a-2b724bd325e6) & [HERE](https://web.microsoftstream.com/video/09997363-8184-4624-8090-556e581079f7)
 
 Images can be found [HERE](https://imgur.com/bAdT4xP) and [HERE](https://imgur.com/F9zPJX0)
 
