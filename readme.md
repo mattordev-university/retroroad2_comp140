@@ -14,7 +14,7 @@ and this is what I came up with. There are various improvements to the codebase,
 To play the game, you don't *need* to have the custom controller, as keyboard and mouse support have been added. 
 Although the controller is a bespoke item, modeled, printed and wired by me the section below will 
 expand on how you can go about creating your own, and what you will need to do so. 
-**You can download the build of RR2TPR [HERE](https://mattrobertscgd.itch.io/)**
+**You can download the build of RR2TPR [HERE](https://mattrobertscgd.itch.io/), but there is also all versions in the repository \n for convenience. This is temporary and I'll be moving them somwhere seperate later.**
 
 
 ## What does it look like?
