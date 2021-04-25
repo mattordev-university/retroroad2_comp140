@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &876514547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 876514548}
+  m_Layer: 0
+  m_Name: CenterOfMass
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &876514548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876514547}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.264, z: -0.185}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3300652305490209782}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3300652304382117985
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,7 +576,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3300652305490209778}
   m_LocalRotation: {x: -0.21130967, y: 0.7848849, z: -0.36599785, w: 0.45315507}
-  m_LocalPosition: {x: 4.2, y: 3.65, z: 6.98}
+  m_LocalPosition: {x: -0.16, y: -2.14, z: 2.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3300652305385250160}
@@ -560,6 +590,7 @@ Transform:
   - {fileID: 3300652304861557180}
   - {fileID: 3300652304382117986}
   - {fileID: 3300652305712076785}
+  - {fileID: 876514548}
   m_Father: {fileID: 3300652305081417465}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
@@ -571,7 +602,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3300652305490209778}
   serializedVersion: 2
-  m_Mass: 1500
+  m_Mass: 2000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -591,7 +622,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.4145575, y: 0.80956054, z: 3.1626472}
-  m_Center: {x: -0.05897069, y: 0.55883443, z: 0.16264868}
+  m_Center: {x: -0.05897069, y: 0.65, z: 0.16264868}
 --- !u!114 &3300652305490209783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,14 +641,15 @@ MonoBehaviour:
   steeringPotMapped: 0
   throttlePotMapped: 0
   brakePotMapped: 0
-  throttleCalMin: 0
-  throttleCalMax: 1023
+  throttleCalMin: 416
+  throttleCalMax: 448
   steeringCalMin: 0
   steeringCalMax: 1023
   brakeCalMin: 0
   brakeCalMax: 1023
+  isBreaking: 0
   breakForce: 1000
-  motorForce: 3000
+  motorForce: 2000
   maxSteerAngle: 45
   frontLeftWheelCollider: {fileID: 3300652305269118648}
   frontRightWheelCollider: {fileID: 3300652306266166374}
@@ -627,6 +659,11 @@ MonoBehaviour:
   frontRightWheelTransform: {fileID: 5825258502263964345}
   backLeftWheelTransform: {fileID: 5825258502263964343}
   backRightWheelTransform: {fileID: 5825258502263964341}
+  speed: 0
+  brakeDeadzoneMultiplier: 1.1
+  currentBreakDeadzoneMultiplier: 0
+  COM: {fileID: 876514547}
+  useCOM: 1
   forwardMarker: {fileID: 3300652304875124346}
   carPos: {fileID: 3300652305490209778}
   teleportUI: {fileID: 0}
@@ -960,7 +997,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3300652306355429533}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f06af5cb4d798094cba27b63f91faf31, type: 3}
   m_Name: 

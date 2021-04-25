@@ -8,8 +8,6 @@ public class CarContUduino : MonoBehaviour
 {
     #region UDUINO_VARS
     [Header("Uduino Variables")]
-    // not sure if this is needed, but will keep for now
-    //UduinoManager uduino;   
 
     // analog pins
     //int steeringPot = 0;
@@ -182,6 +180,9 @@ public class CarContUduino : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Check to see if the uduino is connected.
+
+
         speed = rb.velocity.magnitude;
 
         // INPUT
@@ -190,10 +191,17 @@ public class CarContUduino : MonoBehaviour
 
         ReadPots();
 
-        CheckAbility(buttonAPin);
-        CheckAbility(buttonBPin);
-        CheckAbility(buttonCPin);
-        CheckAbility(buttonDPin);
+        if(IsUduinoConnected())
+        {
+            CheckAbility(buttonAPin);
+            CheckAbility(buttonBPin);
+            CheckAbility(buttonCPin);
+            CheckAbility(buttonDPin);
+        }else
+        {
+            GetAbilityKeyboardInputs();
+        }
+        
 
         if (changeFOV)
         {
@@ -210,7 +218,9 @@ public class CarContUduino : MonoBehaviour
         }
     }
 
-#region MISC_FUNCTIONS
+    
+
+    #region MISC_FUNCTIONS
 
     void CheckAbility(int abilityNo)  
     {
@@ -246,7 +256,7 @@ public class CarContUduino : MonoBehaviour
     }
 
     void TriggerAbility(int abilityNo) 
-    {
+    {    
         Debug.Log($"Ability triggered: {abilityNo}");
 
         if (abilityNo == buttonAPin && checkAb1) {
@@ -300,6 +310,14 @@ public class CarContUduino : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         doBrakeDelay = false;
+    }
+
+    bool IsUduinoConnected()
+    {
+        if(UduinoManager.Instance.isConnected())
+            return true;
+        else
+            return false;
     }
 
 #endregion
@@ -537,13 +555,35 @@ public class CarContUduino : MonoBehaviour
         isBreaking = Input.GetKey(KeyCode.Space);
     }
 
+    private void GetAbilityKeyboardInputs()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1) && checkAb1)
+        {
+            //Do speedboost, change to impluse and not torque change
+            SpeedBoost();
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha2) && checkAb2)
+        {
+            //Do Teleport
+            ShortTeleport();
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha3) && checkAb3)
+        {
+            //Do Flip NEEDS FIXING
+            Flip();
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha4) && checkAb4)
+        {
+            //Do TilePlacer
+            throw new NotImplementedException();
+        }
+    }
+
     private void GetInput()
     {
         
-        if (UduinoManager.Instance.isConnected())
+        if (IsUduinoConnected())
         {
-            
-
             horizontalInput = steeringPotMapped;
 
             verticalInput = throttlePotMapped;
@@ -565,10 +605,18 @@ public class CarContUduino : MonoBehaviour
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         
-        if (!doBrakeDelay)
-            currentBrakeForce = isBreaking ? brakePotMapped : 0.25f;
 
-        ApplyBreaking();
+        if (IsUduinoConnected())
+        {
+            if (!doBrakeDelay)
+                currentBrakeForce = isBreaking ? brakePotMapped : 0.25f;
+                ApplyBreaking();
+        }else
+        {
+            currentBrakeForce = isBreaking ? breakForce : 0f;
+            ApplyBreaking();
+        }
+        
     }
 
     private void ApplyBreaking()
@@ -589,7 +637,6 @@ public class CarContUduino : MonoBehaviour
         frontRightWheelCollider.wheelDampingRate = currentBrakeForce;
         backLeftWheelCollider.wheelDampingRate = currentBrakeForce;
         backRightWheelCollider.wheelDampingRate = currentBrakeForce;
-        Debug.Log(frontLeftWheelCollider.wheelDampingRate);
     }
 
     private void HandleSteering()
