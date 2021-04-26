@@ -110,7 +110,7 @@ public class CarContUduino : MonoBehaviour
 
     [Header("Speedboost variables")]
     // Speedboost vars
-    private int boostAmount = 500;
+    private float boostAmount = 500;
     private float speedBoostDuration = 5f;
     private bool currentlyBoosting = false;
     private float time;
@@ -125,7 +125,7 @@ public class CarContUduino : MonoBehaviour
     //Flip vars
     public bool hasPickedUpFlip;
     public bool isTopCar;
-    public bool isFlippedCar;
+    public bool isFlippedCar = false;
     public bool TopCarCanCollide;
     public bool flipTimerIsRunning;
 
@@ -215,6 +215,23 @@ public class CarContUduino : MonoBehaviour
         if (sideMan.side == "top" && laneFallScript.choice == true)
         {
             exitDisabler.transform.SetParent(exitDisablerOriginalLocation.transform);
+        }
+
+        // Flip ability stuff
+        if(isFlippedCar)
+        {
+#if UNITY_EDITOR
+            Debug.Log("Swapping to the flipped car");
+#endif
+            flippedCar.transform.position = underMarker.transform.position;
+            flippedCar.transform.rotation = underMarker.transform.rotation;
+
+            underMarker.transform.SetParent(underMarker.transform);
+
+            exitDisabler.transform.position = forwardReEnabler.transform.position;
+            exitDisabler.transform.rotation = forwardReEnabler.transform.rotation;
+
+            exitDisabler.transform.SetParent(forwardReEnabler.transform);
         }
     }
 
@@ -340,15 +357,23 @@ public class CarContUduino : MonoBehaviour
 
     private void SpeedBoost()
     {
-        motorForce += boostAmount;
+        
+        //Old method
+        //motorForce += boostAmount;
+
+        //New method, impulse force
+        
+        //Debug.Log("");
+        rb.AddForce(transform.forward * -50000, ForceMode.Impulse);
+
 #if UNITY_EDITOR
-            Debug.Log($"currently boosting, motor force is: {motorForce}");
+        Debug.Log($"currently boosting, boost amount is: {boostAmount}");
 #endif
 
         time = Time.timeSinceLevelLoad;
         time += speedBoostDuration;
         changeFOV = true;
-        StartCoroutine(SpeedboostWait(speedBoostDuration));
+        StartCoroutine(SpeedBoostWait(speedBoostDuration));
 
         checkAb2 = false;
     }
@@ -358,7 +383,8 @@ public class CarContUduino : MonoBehaviour
         transparancyManager.shouldChangeTransparency = true;
 
         hasPickedUpFlip = true;
-        flipTimerIsRunning = false;
+        isFlippedCar = true;
+        flipTimerIsRunning = true;
 
         sideMan.side = "bottom";
         laneFallScript.choice = false;
@@ -367,21 +393,7 @@ public class CarContUduino : MonoBehaviour
             topCarObj.SetActive(false);
         
 
-        if(isFlippedCar)
-        {
-#if UNITY_EDITOR
-            Debug.Log("Swapping to the flipped car");
-#endif
-            flippedCar.transform.position = underMarker.transform.position;
-            flippedCar.transform.rotation = underMarker.transform.rotation;
-
-            underMarker.transform.SetParent(underMarker.transform);
-
-            exitDisabler.transform.position = forwardReEnabler.transform.position;
-            exitDisabler.transform.rotation = forwardReEnabler.transform.rotation;
-
-            exitDisabler.transform.SetParent(forwardReEnabler.transform);
-        }
+        
 
         StartCoroutine(FlipSequence(maxTimeInFlip));
 
@@ -424,7 +436,7 @@ public class CarContUduino : MonoBehaviour
             Destroy(other.gameObject);
 
             isTopCar = false;
-            isFlippedCar = true;
+            
             hasPickedUpFlip = true;
             flipPickupUI.SetActive(true);
             checkAb3 = true;
@@ -432,7 +444,7 @@ public class CarContUduino : MonoBehaviour
 #endregion
     }
 
-    IEnumerator SpeedboostWait(float time) 
+    IEnumerator SpeedBoostWait(float time) 
     {
         yield return new WaitForSeconds(time);
         if (Time.timeSinceLevelLoad >= time && currentlyBoosting)
@@ -490,7 +502,7 @@ public class CarContUduino : MonoBehaviour
         forwardReEnabler = GameObject.FindGameObjectWithTag("FMLoc");
         transparancyManager = GameObject.FindGameObjectWithTag("TMan").GetComponent<TransparancyManager>();
         flippedCar = GameObject.FindGameObjectWithTag("UnderCar");
-        sideMan = GameObject.FindGameObjectWithTag("Car").GetComponent<sideManager>();
+        //sideMan = GameObject.FindGameObjectWithTag("Car").GetComponent<sideManager>();
         rb = GetComponent<Rigidbody>();
         carPos = gameObject;
         mainCam = Camera.main;
@@ -559,13 +571,15 @@ public class CarContUduino : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1) && checkAb1)
         {
-            //Do speedboost, change to impluse and not torque change
-            SpeedBoost();
+            
+            //Do Teleport
+            ShortTeleport();
         }
         if(Input.GetKeyDown(KeyCode.Alpha2) && checkAb2)
         {
-            //Do Teleport
-            ShortTeleport();
+            //Do speedboost, change to impluse and not torque change
+            Debug.Log("caught");
+            SpeedBoost();
         }
         if(Input.GetKeyDown(KeyCode.Alpha3) && checkAb3)
         {

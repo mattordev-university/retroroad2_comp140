@@ -69,7 +69,6 @@ public class LaneFallScript : MonoBehaviour
                             i.GetComponent<Renderer>().enabled = false;
                         }
                     }
-                    Debug.Log("On lane 1");
                     //currentTile.gameObject.SetActive(false);
                 }
 
@@ -85,7 +84,6 @@ public class LaneFallScript : MonoBehaviour
                             i.GetComponent<Renderer>().enabled = false;
                         }
                     }
-                    Debug.Log("On lane 2");
                     //currentTile.gameObject.SetActive(false);
                 }
 
@@ -101,7 +99,6 @@ public class LaneFallScript : MonoBehaviour
                             i.GetComponent<Renderer>().enabled = false;
                         }
                     }
-                    Debug.Log("On lane 3");
                     //currentTile.gameObject.SetActive(false);
                 }
 
@@ -117,7 +114,6 @@ public class LaneFallScript : MonoBehaviour
                             i.GetComponent<Renderer>().enabled = false;
                         }
                     }
-                    Debug.Log("On lane 4");
                     //currentTile.gameObject.SetActive(false);
                 }
             }
@@ -149,7 +145,6 @@ public class LaneFallScript : MonoBehaviour
                             i.GetComponent<Renderer>().enabled = true;
                         }
                     }
-                    Debug.Log("On lane 1");
                     //currentTile.gameObject.SetActive(false);
                 }
 
@@ -165,7 +160,6 @@ public class LaneFallScript : MonoBehaviour
                             i.GetComponent<Renderer>().enabled = true;
                         }
                     }
-                    Debug.Log("On lane 2");
                     //currentTile.gameObject.SetActive(false);
                 }
 
@@ -181,7 +175,6 @@ public class LaneFallScript : MonoBehaviour
                             i.GetComponent<Renderer>().enabled = true;
                         }
                     }
-                    Debug.Log("On lane 3");
                     //currentTile.gameObject.SetActive(false);
                 }
 
@@ -197,7 +190,6 @@ public class LaneFallScript : MonoBehaviour
                             i.GetComponent<Renderer>().enabled = true;
                         }
                     }
-                    Debug.Log("On lane 4");
                     //currentTile.gameObject.SetActive(false);
                 }
             }
